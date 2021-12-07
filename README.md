@@ -19,7 +19,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: eu-west-1
 
       - name: git clone my repo
         uses: actions/checkout@v2
@@ -32,3 +32,40 @@ jobs:
 
       - name: run a plan
         run: terraform plan
+        
+
+### AWS Management Console
+IAM --> Users --> Create a temporary user: github-actions
+Provide full access (SELECT):
+- AmazonS3FullAccess
+- AmazonDynomoDBFullAccess
+- AmaxonVPCFullAccess
+- AmaxonLambdaFullAccess
+- IAMFullAccess
+
+Copy the **Access and Security Key** from the security credential tab
+copy the user arn and copy it to the yml file 
+
+
+### GitHub Action
+Go to your repository ---> Settings --->Secrets
+New repository secret
+Name : AWS_ACCESS_KEY
+
+ACCESS KEY
+Copy the access key from the IAM Management Console
+Paste it under Value: [Access Key]
+[Add Secret]
+
+Name : AWS_SECRET_ACCESS_KEY
+
+SECRET ACCESS KEY
+Copy the access key from the IAM Management Console
+Paste it under Value: [AWS_SECRET_ACCESS_KEY]
+[Add Secret]
+
+.git add .
+git status
+git push
+
+
